@@ -1,0 +1,25 @@
+#!ruby
+#-*- coding: utf-8 -*-
+#
+if ARGV.length != 2
+  puts "usage : ucloth in_dir out_dir"
+  exit
+end
+
+require '../ucloth'
+
+in_dir  = ARGV[0]
+out_dir = ARGV[1]
+cloth   = UikiCloth.new(in_dir, out_dir)
+
+Dir.glob("#{in_dir}/*.uiki") do |f|
+  begin
+    print f.ljust(100)
+    cloth.out_html(File.basename(f))
+  rescue => e
+    print "\r"
+    puts f + ' ... ' + e.message
+  end
+  print "\r"
+end
+
