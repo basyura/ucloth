@@ -37,6 +37,9 @@ if red.respond_to? out_meth
         border  : 1px solid gray;
         margin-left : 20px;
       }
+      strong {
+        color : red;
+      }
     </style>
   </head>
   <body>
