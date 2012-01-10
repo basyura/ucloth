@@ -4,3 +4,4 @@ source "http://rubygems.org"
 gemspec
 
 gem 'RedCloth' , '~>4.2.9'
+gem 'action_view'

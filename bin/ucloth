@@ -3,6 +3,9 @@
 $:.unshift(File.dirname(__FILE__) + '/../lib/')
 require 'optparse'
 require 'redcloth'
+require 'action_view'
+
+include ActionView::Helpers::SanitizeHelper
 
 if %w(--version -v).include? ARGV.first
   puts "#{RedCloth::NAME} #{RedCloth::VERSION}"
@@ -21,7 +24,9 @@ end
 opts.parse! ARGV
 
 #red = RedCloth.new( ARGF.read )
-red = RedCloth.new(open(ARGV[0],'r:utf-8').read.gsub(/<code .*?>\n/,'<code>'))
+content = open(ARGV[0],'r:utf-8').read.gsub(/<code .*?>\n/,'<code>')
+content = sanitize(content, :tags => %w(pre code))
+red = RedCloth.new(content)
 out_meth = "to_#{ output_as }"
 if red.respond_to? out_meth
   puts <<-EOF
